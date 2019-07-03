@@ -1,11 +1,14 @@
 #include <stdio.h>
 #include <time.h>
 #include <signal.h>
+#include "list.h"
+#include "thread.h"
 
 static timer_t timer;
 
 static void timer_interrupt(int signo){
-	printf("I got signal %d\n",signo);
+	/* re-schedule */
+	schedule();
 }
 
 int timer_init() {
@@ -16,7 +19,7 @@ int timer_init() {
 	value.it_value.tv_nsec = 0;
 
 	value.it_interval.tv_sec = 0;
-	value.it_interval.tv_nsec = 100;
+	value.it_interval.tv_nsec = 1;
 
 	success = timer_create(CLOCK_REALTIME, NULL, &timer);
 	if (success == -1) {

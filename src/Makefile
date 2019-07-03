@@ -3,7 +3,8 @@ cflags=-fPIC -c
 objects = list.o thread.o tid.o timer.o switch.o
 
 lib: $(objects)
-	$(cc) -fPIC -shared -lrt -o libpthreadj.so $(objects)
+	$(cc) -fPIC -shared -lrt -g -o libpthreadj.so $(objects)
+	cp ./libpthreadj.so ../tests/libpthreadj.so
 
 list.o: list.c
 	$(cc) $(cflags) list.c
@@ -17,7 +18,8 @@ tid.o: tid.c
 timer.o: timer.c
 	$(cc) $(cflags) timer.c
 
-switch.o: switch.S switch.c
+switch.o: switch.S 
+	$(cc) $(cflags) switch.S
 
 clean:
 	rm -f $(objects) libpthreadj.so
